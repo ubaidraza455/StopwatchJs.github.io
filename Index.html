@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/css/bootstrap.min.css">
+    <title>A Stopwatch</title>
+</head>
+<body>
+    
+
+    <title>Stopwatch</title>
+    <style>
+
+        .main{
+            margin-left: 40vw;
+        }
+        .stopwatch {
+            font-size: 15vh;
+        }
+
+        .btn{
+            margin-top: 1vh;
+            height: 6vh;
+            width: 7vw;
+            
+                    }
+
+    </style>
+</head>
+<body class="bg-dark">
+    <div class="main">
+    <div class="stopwatch text-white">0:0:0</div>
+    <button id="startStop" class="btn btn-light">Start</button>
+    <button id="reset" class="btn btn-light">Reset</button>
+    </div>
+    <script>
+        let timer;
+        let isRunning = false;
+        let seconds = 0;
+        let minutes = 0;
+        let hours = 0;
+
+        function updateStopwatch() {
+            seconds++;
+            if (seconds >= 60) {
+                seconds = 0;
+                minutes++;
+                if (minutes >= 60) {
+                    minutes = 0;
+                    hours++;
+                }
+            }
+
+            const timeString = `${hours}:${minutes}:${seconds}`;
+            document.querySelector(".stopwatch").textContent = timeString;
+        }
+
+        document.getElementById("startStop").addEventListener("click", function () {
+            if (isRunning) {
+                clearInterval(timer);
+                document.getElementById("startStop").textContent = "Start";
+            } else {
+                timer = setInterval(updateStopwatch, 1000);
+                document.getElementById("startStop").textContent = "Stop";
+            }
+            isRunning = !isRunning;
+        });
+
+        document.getElementById("reset").addEventListener("click", function () {
+            clearInterval(timer);
+            isRunning = false;
+            seconds = 0;
+            minutes = 0;
+            hours = 0;
+            document.getElementById("startStop").textContent = "Start";
+            document.querySelector(".stopwatch").textContent = "0:0:0";
+        });
+    </script>
+</body>
+</html>
